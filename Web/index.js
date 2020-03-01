@@ -217,7 +217,6 @@ function changedesc(prod) {
 }
 
 function mise(){
-  
   $.ajax({
     type: 'POST',
     url: 'Model/changedesc.php',
@@ -229,7 +228,14 @@ function mise(){
 }
 
 function rangemise(){
-
+  $.ajax({
+    type: 'POST',
+    url: 'Model/changedesc.php',
+    data:{'desc':desc,'prod':prod},
+    success:function(html) {
+      console.log("Send comment '"+desc+"' to the server"+html);
+    }
+  });
 }
 
 function remove (evt){

@@ -26,7 +26,7 @@
           <p><?=getdesc($link,$prodid);?></p>
         <?php }?>
       </div>
-      <p><b>Vous avez $<?=$money?></b></p>
+      <?php if(isset($user) && $user==true): ?><p><b>Vous avez $<?=$money?></b></p>
       <p>Vos mises actuelles sur ce produit:</p>
       <div id='mise'>
         <p><?=getmises($link,$logID)?></p>
@@ -42,6 +42,7 @@
         <input id='mr2' type="number" step="0.01"></input>
         <a class="mise" onclick='rangemise()'>Miser dans cette plage !</a>
       </fieldset>
+      <?php endif;?>
     <?php endif;
   } else {
     include("View/content-shopping.php");
