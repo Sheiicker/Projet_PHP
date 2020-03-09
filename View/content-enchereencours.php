@@ -26,10 +26,10 @@
           <p><?=getdesc($link,$prodid);?></p>
         <?php }?>
       </div>
-      <?php if(isset($user) && $user==true): ?><p><b>Vous avez $<?=$money?></b></p>
+      <?php if(isset($user) && $user==true && $admin==false): ?><p><b>Vous avez $<?=$money?></b></p>
       <p>Vos mises actuelles sur ce produit:</p>
       <div id='mise'>
-        <p><?=getmises($link,$logID)?></p>
+        <p><?=getmises($link,$logID,$prodid)?></p>
       </div>
       <fieldset>
         <legend>Miser</legend>
