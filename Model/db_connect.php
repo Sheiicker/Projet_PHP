@@ -16,8 +16,8 @@ function getdesc($link,$id){
   }
 }
 
-function getmises($link,$user){
-  $resource = $link->query('SELECT * FROM bets WHERE user_pseudo="'.$user.'" ORDER BY amount;');
+function getmises($link,$user,$prodid){
+  $resource = $link->query('SELECT * FROM bets WHERE user_pseudo="'.$user.'" AND id_prod="'.$prodid.'" ORDER BY amount;');
   while ( $rows = $resource->fetch_assoc() ) {
       echo "{$rows['amount']}";
       echo " - ";
