@@ -26,9 +26,7 @@ function getmises($link,$user,$prodid){
 
 function takemoney($link,$money,$num,$logID){
   $sql_update='UPDATE user SET money='.($money-$num).' WHERE pseudo="'.$logID.'"';
-  if ($link->query($sql_update)) {
-    print_r("\nL'argent a été retiré.");
-  } else {
+  if (!$link->query($sql_update)) {
     // debug("<p>Utilisateur $_POST['logID'] enregistré.</p>",
     echo "\nUne erreur est survenue..";
     print_r($sql_update);
@@ -37,9 +35,7 @@ function takemoney($link,$money,$num,$logID){
 
 function bet($link,$num,$prod,$logID){
   $sql_insert="insert INTO bets (user_pseudo, id_prod, amount) VALUES ('".$logID."','".$prod."','".$num."');";
-  if ($link->query($sql_insert)) {
-    print_r("\nLa mise à été faite.");
-  } else {
+  if (!$link->query($sql_insert)) {
     // debug("<p>Utilisateur $_POST['logID'] enregistré.</p>",
     echo "\nUne erreur est survenue..";
     print_r($sql_update);

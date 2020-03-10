@@ -225,9 +225,9 @@ function mise(){
     data:{'func':"mise",'num':num,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num+"' to the server for "+prod+html);
-      if (html="no money") {
+      if (html=="no money") {
         alert("Vous n'avez plus asser d'argent.");
-      } else if (html="La mise à été faite.") {
+      } else if (html=="mise") {
         alert("Vous avez misé.")
       }
     }
@@ -235,15 +235,21 @@ function mise(){
 }
 
 function rangemise(){
-num=document.getElementById('mr1').value;
-num=document.getElementById('mr2').value;
+num1=document.getElementById('mr1').value;
+num2=document.getElementById('mr2').value;
 prod=window.location.href.split('produit=',2)[1];
   $.ajax({
     type: 'POST',
-    url: 'Model/mise.php',
+    url: 'Model/mises.php',
     data:{'func':"rangemise",'num1':num1,'num2':num2,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num1+"' and '"+num2+"' to the server for "+prod+html);
+      if (html=="no money") {
+        alert("Vous n'avez plus asser d'argent.");
+      } else if (html=='mise') {
+        alert("Vous avez misé.")
+      } {
+      }
     }
   });
 }
