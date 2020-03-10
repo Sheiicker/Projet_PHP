@@ -38,6 +38,7 @@ if (isset($logID) && isset($logMDP)){
       } elseif ($fetch["user"]==1) {
         $result="logged";
         $money=$fetch["money"];
+        $_SESSION['money']=$money;
       } else {
         $result="guest";
       }

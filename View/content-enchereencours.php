@@ -14,7 +14,7 @@
   // DISPLAY SHOP IN DIV *****************************
   if (isset($_GET['produit'])){
     getvarprod($_GET['produit']);
-    if ($prod==null || $o=0):?>
+    if (isset($prod)==false || $o=0):?>
       <h1>La fiche du produit n'a pas été trouvée. Contactez l'administrateur.</h1>
     <?php else :?>
       <h1>Fiche Produit de <?=$prodname?></h1>
@@ -36,6 +36,9 @@
         <input id='m1' type="number" step="0.01"></input>
         <a class="mise" onclick='mise()'>Miser !</a>
       </fieldset>
+      <div id="dialog-confirm" style="display:none;" title="Empty the recycle bin?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Vous allez miser.</p>
+      </div>
       <fieldset>
         <legend>Miser avec une plage</legend>
         <input id='mr1' type="number" step="0.01"></input>
