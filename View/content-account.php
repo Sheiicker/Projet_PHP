@@ -12,7 +12,7 @@
 </fieldset>
 <fieldset>
   <legend>Sign in</legend>
-  <form action="Model/signin.php" method="post">
+  <form action="./Model/signin.php" method="post">
     <?php if(isset($_GET['error'])) : ?><p><?=signinerror($_GET['error']);?></p><?php endif; ?>
     <p>User : <input onchange="verif(event)" minlength="4" maxlength="15" required type="text" name="logID"/></p>
     <p>Password : <input required type="password" name="logMDP"/></p>

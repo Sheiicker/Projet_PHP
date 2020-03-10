@@ -9,16 +9,16 @@ $sql_insert="insert INTO user (owner, user, pseudo, mdp, mail, age, money) VALUE
 // echo $sql_insert."<br/>";
 if (!$link->query($sql_insert)) {
   if ($link->errno=="1062"){
-    header('Location:./index.php?page=account&error=1062');
+    header('Location:../index.php?page=account&error=1062');
   } else {
     echo "Echec lors de la création de la table : (" . $link->errno . ") " . $link->error."<br/>",
     "Envoyez cette erreur a l'administrateur pour qu'il corrige tout ça et vous récompense...";
-    header('Location:./index.php?page=account');
+    header('Location:../index.php?page=account');
   }
 } else {
   echo "<p>Utilisateur $logID enregistré.</p>",
   "<a href='./index.php?page=account'>Essayez de vos log in !</a>";
-  header('Location:./index.php?page=account');
+  header('Location:../index.php?page=account');
 }
 
 // // REGISTER A USER
