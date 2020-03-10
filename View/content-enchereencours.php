@@ -26,23 +26,18 @@
           <p><?=getdesc($link,$prodid);?></p>
         <?php }?>
       </div>
-      <?php if(isset($user) && $user==true && $admin==false): ?><p><b>Vous avez $<?=$money?></b></p>
+      <?php if(isset($user) && $user==true && $admin==false): ?><p><b id='mon'>Vous avez $<?=$money?></b></p>
       <p>Vos mises actuelles sur ce produit:</p>
-      <div id='mise'>
-        <p><?=getmises($link,$logID,$prodid)?></p>
-      </div>
+      <p id='mise'><?=getmises($link,$logID,$prodid)?></p>
       <fieldset>
         <legend>Miser</legend>
-        <input id='m1' type="number" step="0.01"></input>
+        <input id='m1' min="0.10" type="number" step="0.01"></input>
         <a class="mise" onclick='mise()'>Miser !</a>
       </fieldset>
-      <div id="dialog-confirm" style="display:none;" title="Empty the recycle bin?">
-        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Vous allez miser.</p>
-      </div>
       <fieldset>
         <legend>Miser avec une plage</legend>
-        <input id='mr1' type="number" step="0.01"></input>
-        <input id='mr2' type="number" step="0.01"></input>
+        <input id='mr1' min="0.10" onchange="mr1()" type="number" step="0.01"></input>
+        <input id='mr2' min="" type="number" step="0.01"></input>
         <a class="mise" onclick='rangemise()'>Miser dans cette plage !</a>
       </fieldset>
       <?php endif;?>

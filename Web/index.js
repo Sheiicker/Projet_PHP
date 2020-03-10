@@ -216,6 +216,10 @@ function changedesc(prod) {
   });
 }
 
+function mr1(){
+  document.getElementById('mr2').setAttribute("min",document.getElementById('mr1').value);
+}
+
 function mise(){
   num=document.getElementById('m1').value;
   prod=window.location.href.split('produit=',2)[1];
@@ -228,7 +232,10 @@ function mise(){
       if (html=="no money") {
         alert("Vous n'avez plus asser d'argent.");
       } else if (html=="mise") {
-        alert("Vous avez misé.")
+        alert("Vous avez misé.");
+        // console.log("Vous avez $" + document.getElementById('mon').innerHTML.split('$',2)[1]);
+        document.getElementById('mise').innerHTML+=num + " - ";
+        document.getElementById('mon').innerHTML="Vous avez $" + parseInt(document.getElementById('mon').innerHTML.split('$',2)[1]-num);
       }
     }
   });
@@ -247,7 +254,18 @@ prod=window.location.href.split('produit=',2)[1];
       if (html=="no money") {
         alert("Vous n'avez plus asser d'argent.");
       } else if (html=='mise') {
-        alert("Vous avez misé.")
+        alert("Vous avez misé.");
+        money = parseInt(document.getElementById('mon').innerHTML.split('$',2)[1]);
+        var i = num1;
+        while (i<=num2) {
+          i=parseFloat(i+0.01);
+          document.getElementById('mise').innerHTML+=i + " - ";
+          console.log(i);
+          money=money-i;
+          console.log(i+"+0.01");
+          console.log(money);
+        }
+        document.getElementById('mon').innerHTML="Vous avez $" + money;
       } {
       }
     }
