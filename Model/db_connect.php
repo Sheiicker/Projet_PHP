@@ -41,6 +41,39 @@ function bet($link,$num,$prod,$logID){
     print_r($sql_update);
   }
 }
+
+function meta_input($link,$min="",$max=""){
+  // echo "Hello";
+  $select = mysqli_query($link,"select * from input ORDER BY ordre");
+  while ($row = mysqli_fetch_object($select)) {
+    // echo $row->typecase;
+     $ordre=$row->ordre;
+     $name=$row->name;
+     $id=$row->id;
+     $typecase=$row->typecase;
+     $type=$row->type;
+     $onchange=$row->onchange;
+     $value=$row->value;
+     $href=$row->href;
+     $label=$row->label;
+     $required=$row->required;
+     $minlength=$row->minlength;
+     $maxlength=$row->maxlength;
+     if ($ordre>=$min && $ordre<=$max) {
+       switch ($typecase) {
+         case 'text':
+         echo "<p>".$label."<input id='".$id."' ".$required." minlength='".$minlength."' maxlength='".$maxlength."' type='".$type."' name='".$name."' value='".$value."'/></p>";
+         break;
+         case 'a':
+         echo "<a id='".$id."' href='".$href."'>".$label."</a></span>";
+         break;
+         // case 'span':
+         //   // code...
+         //   break;
+       }
+     }
+  }
+}
 // echo "\nConnexion reussi\n";
 // mysqli_select_database('vm950914') or die ("Impossible d'effectuer la requete") ;
 // $resultat_sql=mysqli_query($link,$chaine_sql_select);
