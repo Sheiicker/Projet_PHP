@@ -141,4 +141,6 @@ function getvarprod($prod){
   global $prodname;
   $prodname=explode('.',$prod)[0];
 }
+
+// mysql_free_result($result);
 ?>
