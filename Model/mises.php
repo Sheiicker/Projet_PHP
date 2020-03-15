@@ -36,6 +36,10 @@ function rangemise(){
       $num=$num+$i;
   }
 
+  array_push($list,$num2);
+  $i=$i+0.01;
+  $num=$num+$i;
+
   if ($money>=$num) {
     foreach ($list as $elem) {
       takemoney($link,$money,$elem,$logID);

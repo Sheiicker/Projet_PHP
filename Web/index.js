@@ -22,10 +22,13 @@ function handleFiles(files) {
 }
 
 function uploadFile(file, i) {
+  var time = new Date();
+  time = time.valueOf();
+  console.log(time);
   $.ajax({
     type: "POST",
     url: 'Model/imageloggin.php',
-    data:{prodname:file.name},
+    data:{prodname:file.name,time:time},
     success:function(html) {
       // console.log("User "+evt.target.value+" sent");
       if(html!="Le produit est maintenant en vente !"){
@@ -216,6 +219,44 @@ function changedesc(prod) {
   });
 }
 
+// Date
+function dateDiff(date1, date2){
+    var diff = {}                           // Initialisation du retour
+    var tmp = date2 - date1;
+
+    tmp = Math.floor(tmp/1000);             // Nombre de secondes entre les 2 dates
+    diff.secs = tmp % 60;                    // Extraction du nombre de secondes
+
+    tmp = Math.floor((tmp-diff.secs)/60);    // Nombre de minutes (partie entière)
+    diff.mins = tmp % 60;                    // Extraction du nombre de minutes
+
+    tmp = Math.floor((tmp-diff.mins)/60);    // Nombre d'heures (entières)
+    diff.hours = tmp % 24;                   // Extraction du nombre d'heures
+
+    tmp = Math.floor((tmp-diff.hours)/24);   // Nombre de jours restants
+    diff.days = tmp;
+    return diff;
+}
+
+function selldate(){
+  var date = setInterval(refresh,100);
+  options= { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  console.log(document.getElementById('datenow').innerHTML);
+  a = new Date(parseInt(document.getElementById('datenow').innerHTML));
+  document.getElementById('datenow').innerHTML="La vente termine le " + a.toLocaleDateString('fr-CA', options);
+  b = a.valueOf();
+  b = new Date(b);
+  b = b.setMonth(b.getMonth()+1);
+  b = new Date(b);
+  console.log(a);
+  console.log(b);
+  function refresh(){
+    diff = dateDiff(new Date(),b);
+    document.getElementById('dateleft').innerHTML="Il vous reste : " + diff.days + "d " + diff.hours + "h " + diff.mins + "m " + diff.secs + "s.";
+  }
+}
+
+// MISE
 function mr1(){
   document.getElementById('mr2').setAttribute("min",document.getElementById('mr1').value);
 }
@@ -230,9 +271,9 @@ function mise(){
     success:function(html) {
       console.log("Send comment '"+num+"' to the server for "+prod+html);
       if (html=="no money") {
-        alert("Vous n'avez plus asser d'argent.");
+        miseresult(false);
       } else if (html=="mise") {
-        alert("Vous avez misé.");
+        miseresult(true);
         // console.log("Vous avez $" + document.getElementById('mon').innerHTML.split('$',2)[1]);
         document.getElementById('mise').innerHTML+=num + " - ";
         document.getElementById('mon').innerHTML="Vous avez $" + parseInt(document.getElementById('mon').innerHTML.split('$',2)[1]-num);
@@ -252,9 +293,9 @@ prod=window.location.href.split('produit=',2)[1];
     success:function(html) {
       console.log("Send comment '"+num1+"' and '"+num2+"' to the server for "+prod+html);
       if (html=="no money") {
-        alert("Vous n'avez plus asser d'argent.");
+        miseresult(false);
       } else if (html=='mise') {
-        alert("Vous avez misé.");
+        miseresult(true);
         money = parseInt(document.getElementById('mon').innerHTML.split('$',2)[1]);
         var i = num1;
         while (i<=num2) {
@@ -272,6 +313,49 @@ prod=window.location.href.split('produit=',2)[1];
   });
 }
 
+function miseresult(work){
+  switch (work) {
+    case true:
+      document.getElementById('disp').style.opacity="100%";
+      document.getElementById('disp').innerHTML="Vous avez misé.";
+      document.getElementById('disp').style.display="unset";
+      document.getElementById('disp').style.background="green";
+      setTimeout(function () {
+        var i = 100;
+        var stopdisp = setInterval(dispred,10)
+        function dispred(){
+          i=i-1;
+          document.getElementById('disp').style.opacity=i+"%";
+          if (i==0) {
+            clearInterval(stopdisp);
+            document.getElementById('disp').style.display="none";
+          }
+        }
+      }, 3000);
+      break;
+    case false:
+      document.getElementById('disp').style.opacity="100%";
+      document.getElementById('disp').innerHTML="Vous n'avez plus asser d'argent.";
+      document.getElementById('disp').style.display="unset";
+      document.getElementById('disp').style.background="red";
+      setTimeout(function () {
+        var i = 100;
+        var stopdisp = setInterval(dispred,10)
+        function dispred(){
+          i=i-1;
+          document.getElementById('disp').style.opacity=i+"%";
+          if (i==0) {
+            clearInterval(stopdisp);
+            document.getElementById('disp').style.display="none";
+          }
+        }
+      }, 3000);
+      break;
+    }
+  }
+
+
+// DELETE FILE
 function remove (evt){
   elem=evt.target.parentNode.children[0].children[0].src.split("/", 7)[6];
   // element=evt.target.parentNode.children[0].children[0].src.split("/", 7)[6];
