@@ -35,6 +35,8 @@ h1{text-align:center;}
 
 .mise{float:right;background:linear-gradient(rgb(170,170,240),rgb(150,150,180));padding:10px 25px}
 .mise:hover{background:linear-gradient(rgb(150,150,180),rgb(170,170,240));cursor:pointer;}
+#disp{opacity: 100%;display: none;background: red;}
+
 
 p {
   margin-top: 0;

@@ -18,6 +18,9 @@
       <h1>La fiche du produit n'a pas été trouvée. Contactez l'administrateur.</h1>
     <?php else :?>
       <h1>Fiche Produit de <?=$prodname?></h1>
+      <h2 id="datenow"><?=$prodid?></h2>
+      <h2 id="dateleft"></h2>
+      <script>selldate();</script>
       <div class="flex">
         <?=recupimg($prodid,"big");?>
         <?php if (isset($admin) && ($admin==true)){ ?>
@@ -29,6 +32,7 @@
       <?php if(isset($user) && $user==true && $admin==false): ?><p><b id='mon'>Vous avez $<?=$money?></b></p>
       <p>Vos mises actuelles sur ce produit:</p>
       <p id='mise'><?=getmises($link,$logID,$prodid)?></p>
+      <strong><p id="disp"></p></strong>
       <fieldset>
         <legend>Miser</legend>
         <input id='m1' min="0.10" type="number" step="0.01"></input>
