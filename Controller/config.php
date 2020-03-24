@@ -56,6 +56,7 @@ if (isset($logged) && $logged==false) {
 
 
 if (isset($admin) && $admin==true && $m['page']=='account') {
+  // include('Model/adminmanager.php');
   $m['page']='account2';
   $_GET["page"]="account2";
 }
