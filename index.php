@@ -22,4 +22,4 @@
      ?>
    </div>
 </body>
-<?php include 'Model/footer.php'; ?>
+<?php// include 'Model/footer.php'; ?>

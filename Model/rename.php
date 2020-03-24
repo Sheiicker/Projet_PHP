@@ -1,16 +1,19 @@
 <?php
 include('db_connect.php');
-$url="../../uploads/";
-$filename=$_POST["name"];
-$filerename=$_POST["rename"];
-rename ($url.$filename,$url.$filerename);
-$name=explode(".",explode("_",$_POST["name"])[1])[0];
-$rename=explode(".",explode("_",$_POST["rename"])[1])[0];
-$sql_update='UPDATE sell SET name="'.$rename.'" WHERE name="'.$name.'";';
-if (!$link->query($sql_update)) {
-  echo "La poste a pas fait le taff...Echec du renommage du produit : (" . $link->errno . ")",$sql_insert;
-} else {
-  echo 'UPDATE sell SET name="'.$rename.'" WHERE name="'.$name.'";';
+  $url="../../uploads/";
+  $filename=$_POST["name"];
+  $filerename=$_POST["rename"];
+  $id=explode("_",$_POST["name"])[0];
+  $rename=explode("_",$_POST["rename"])[1];
+try {$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $dbh->beginTransaction();
+  $dbh->exec('UPDATE sell SET name="'.$rename.'" WHERE id="'.$id.'";');
+  $dbh->commit();
   echo "Le produit est maintenant renommé !";
+  rename ($url.$filename,$url.$filerename);
+} catch (Exception $e) {
+  echo 'UPDATE sell SET name="'.$rename.'" WHERE id="'.$id.'";';
+  echo "\nLa poste a pas fait le taff...Echec du renommage du produit : (" . $e->getMessage();
+  $dbh->rollBack();
 }
 ?>

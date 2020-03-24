@@ -27,8 +27,8 @@ function uploadFile(file, i) {
   console.log(time);
   $.ajax({
     type: "POST",
-    url: 'Model/imageloggin.php',
-    data:{prodname:file.name,time:time},
+    url: 'Model/db_connect.php',
+    data:{'func':"imglog",prodname:file.name,time:time},
     success:function(html) {
       // console.log("User "+evt.target.value+" sent");
       if(html!="Le produit est maintenant en vente !"){
@@ -166,8 +166,10 @@ function wrong(){
 }
 
 function rename (evt){
-  elem1=(evt.target.parentNode.children[0].children[0].alt.split('_',2)[0]+'_'+evt.target.value+'.jpg');
+  elem1=(evt.target.parentNode.children[0].children[0].alt.split('_')[0]+'_'+evt.target.value+'.jpg');
   elem2=evt.target.parentNode.children[0].children[0].alt;
+  console.log(elem2);
+  console.log(elem1);
   $.ajax({
     type: "POST",
     url: 'Model/rename.php',
@@ -177,6 +179,7 @@ function rename (evt){
       console.log("Renamed "+evt.target.parentNode.children[0].children[0].alt.split('_',2)[1]+" to "+evt.target.value+".jpg");
     }
   });
+  evt.target.parentNode.children[0].children[0].alt=elem1=evt.target.parentNode.children[0].children[0].alt.split('_')[0]+"_"+evt.target.value+".jpg";
 }
 
 function addmoney (evt){
@@ -184,8 +187,8 @@ function addmoney (evt){
   // console.log(user);
   $.ajax({
     type: 'POST',
-    url: 'Model/addmoney.php',
-    data:{'money':5,'user':user},
+    url: 'Model/db_connect.php',
+    data:{'func':"adminaddmoney",'money':5,'user':user},
     success:function(html) {
       console.log("Added "+"$5"+" to "+user+"."+html);
       user=evt.target.parentNode.children[1].innerHTML=parseInt(evt.target.parentNode.children[1].innerHTML)+5;
@@ -198,8 +201,8 @@ function takemoney (evt){
   // console.log(user);
   $.ajax({
     type: 'POST',
-    url: 'Model/takemoney.php',
-    data:{'money':5,'user':user},
+    url: 'Model/db_connect.php',
+    data:{'func':"admintakemoney",'money':5,'user':user},
     success:function(html) {
       console.log("Taken "+"$5"+" to "+user+"."+html);
       user=evt.target.parentNode.children[1].innerHTML=parseInt(evt.target.parentNode.children[1].innerHTML)-5;
@@ -266,7 +269,7 @@ function mise(){
   prod=window.location.href.split('produit=',2)[1];
   $.ajax({
     type: 'POST',
-    url: 'Model/mises.php',
+    url: 'Model/db_connect.php',
     data:{'func':"mise",'num':num,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num+"' to the server for "+prod+html);
@@ -288,7 +291,7 @@ num2=document.getElementById('mr2').value;
 prod=window.location.href.split('produit=',2)[1];
   $.ajax({
     type: 'POST',
-    url: 'Model/mises.php',
+    url: 'Model/db_connect.php',
     data:{'func':"rangemise",'num1':num1,'num2':num2,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num1+"' and '"+num2+"' to the server for "+prod+html);

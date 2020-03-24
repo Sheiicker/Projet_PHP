@@ -15,33 +15,28 @@ if (isset($_POST['logID']) && isset($_POST['logMDP'])){
 }
 
 if (isset($logID) && isset($logMDP)){
-  $sql_verify_log = "select pseudo from user where pseudo='".$logID."';";
-  // $sql_insert="insert INTO user (pseudo, mdp) VALUES (pseudo,mdp);";
-  // echo $sql_verify_log."<br/>";
-  $query = mysqli_query($link,$sql_verify_log);
-  $nbresultat = mysqli_num_rows($query);
+  $nbresultat = $veriflog_prepare->execute(array( 'id' => $logID ));
   if ($nbresultat==0) {
     echo "Echec lors de la connection : Nom d'utilisateurs inconnu";
     $result="unset";
-  } else {
-    $sql_verify_mdp = "select mdp from user where pseudo='".$logID."' AND mdp='".$logMDP."';";
-    // echo $sql_verify_mdp."<br/>";
-    $querymdp = mysqli_query($link,$sql_verify_mdp);
-    $nbmdp = mysqli_num_rows($querymdp);
+  } elseif ($nbresultat>0) {
+    $nbmdp = $verifmdp_prepare->execute(array( 'id' => $logID, 'mdp' => $logMDP ));
     if ($nbmdp==0) {
       $result="wrong";
     } else {
-      $val = mysqli_query($link, "select * from user WHERE pseudo='".$logID."' AND mdp='".$logMDP."';");
-      $fetch=mysqli_fetch_assoc($val);
-      if($fetch["owner"]==1){
-        $result="adminlogged";
-      } elseif ($fetch["user"]==1) {
-        $result="logged";
-        $money=$fetch["money"];
-        $_SESSION['money']=$money;
-      } else {
-        $result="guest";
-      }
+      $resultats=$dbh->query("select * from user WHERE pseudo='".$logID."' AND mdp='".$logMDP."';");
+      $resultats->setFetchMode(PDO::FETCH_OBJ);
+      while( $cur = $resultats->fetch()){
+        if($cur->owner==1){
+          $result="adminlogged";
+        } elseif ($cur->user==1) {
+          $result="logged";
+          $money=$cur->money;
+          $_SESSION['money']=$money;
+        } else {
+          $result="guest";
+        }
+      } $resultats->closeCursor();
       // echo "Connexion réussie";
     }
   }
