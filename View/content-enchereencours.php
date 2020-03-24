@@ -24,14 +24,14 @@
       <div class="flex">
         <?=recupimg($prodid,"big");?>
         <?php if (isset($admin) && ($admin==true)){ ?>
-          <textarea onchange="changedesc(<?=$prodid?>)"><?=getdesc($link,$prodid);?></textarea>
+          <textarea onchange="changedesc(<?=$prodid?>)"><?=getdesc($dbh,$prodid);?></textarea>
         <?php } else { ?>
-          <p><?=getdesc($link,$prodid);?></p>
+          <p><?=getdesc($dbh,$prodid);?></p>
         <?php }?>
       </div>
       <?php if(isset($user) && $user==true && $admin==false): ?><p><b id='mon'>Vous avez $<?=$money?></b></p>
       <p>Vos mises actuelles sur ce produit:</p>
-      <p id='mise'><?=getmises($link,$logID,$prodid)?></p>
+      <p id='mise'><?=getmises($dbh,$logID,$prodid)?></p>
       <strong><p id="disp"></p></strong>
       <fieldset>
         <legend>Miser</legend>

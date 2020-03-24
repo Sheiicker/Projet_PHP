@@ -13,10 +13,7 @@ if (!file_exists('../../uploads')) {
   mkdir('../../uploads', 0775);
 }
 
-$resource = $link->query('SELECT * FROM sell ORDER BY id DESC');
-// while ($rows = $resource->fetch_assoc()) {
-$time=$resource->fetch_assoc()['id'];
-// }
+$time = imgup($dbh);
 
 $dir    = '../../uploads';
 $files1 = scandir($dir);

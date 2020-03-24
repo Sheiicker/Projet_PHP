@@ -1,4 +1,9 @@
-<?php $pagename = basename($_SERVER['PHP_SELF']);
+<?php
+
+//Settings DB
+// echo $db->dbh;
+
+$pagename = basename($_SERVER['PHP_SELF']);
 define("NBMENU","4");
 $menu = array(
     1 => array(
