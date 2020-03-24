@@ -139,53 +139,6 @@ function meta_input($dbh,$min="",$max=""){
   } $resultats->closeCursor();
 }
 
-function adminaddmoney($dbh){
-  $resultats=$dbh->query('SELECT * FROM user WHERE 1');
-  $resultats->setFetchMode(PDO::FETCH_OBJ);
-  while( $ligne = $resultats->fetch()){
-    // print_r($ligne->pseudo."\n");
-    // print_r($_POST["user"]."\n");
-    $moneyadd=$_POST["money"];
-    $moneynow=$ligne->money;
-    $user=$_POST["user"];
-    if ($user==$ligne->pseudo){
-      try {$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->beginTransaction();
-        $dbh->exec('UPDATE user SET money='.($moneyadd+$moneynow).' WHERE pseudo="'.$user.'"');
-        $dbh->commit();
-        print_r("\nL'argent a été versé.");
-      } catch (Exception $e) {
-        $dbh->rollBack();
-        echo "\nUne erreur est survenue.." . $e->getMessage();
-        print_r($sql_update);
-      }
-    }
-  } $resultats->closeCursor();
-}
-
-function admintakemoney($dbh){
-  $resultats=$dbh->query('SELECT * FROM user WHERE 1');
-  $resultats->setFetchMode(PDO::FETCH_OBJ);
-  while( $ligne = $resultats->fetch()){
-    // print_r($ligne->pseudo."\n");
-    // print_r($_POST["user"]."\n");
-    $moneyadd=$_POST["money"];
-    $moneynow=$ligne->money;
-    $user=$_POST["user"];
-      if ($user==$ligne->pseudo){
-        try {$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          $dbh->beginTransaction();
-          $dbh->exec('UPDATE user SET money='.($moneyadd-$moneynow).' WHERE pseudo="'.$user.'"');
-          $dbh->commit();
-          print_r("\nL'argent a été versé.");
-        } catch (Exception $e) {
-        $dbh->rollBack();
-        echo "\nUne erreur est survenue.." . $e->getMessage();
-        print_r($sql_update);
-      }
-    }
-  } $resultats->closeCursor();
-}
 function admingetusers($dbh){
   $resultats=$dbh->query("SELECT * FROM user WHERE 1");
   $resultats->setFetchMode(PDO::FETCH_OBJ);
@@ -197,50 +150,6 @@ function admingetusers($dbh){
     '<td class="adminaddmoney" onclick="takemoney(event)">Retrait $5</td>',
     '</tr>';
   } $resultats->closeCursor();
-}
-
-function mise($dbh){
-  $logID=$_SESSION['logID'];
-  $money=$_SESSION['money'];
-  $num=$_POST['num'];
-  $prod=$_POST['prod'];
-  if ($money>=$num) {
-    takemoney($dbh,$money,$num,$logID);
-    bet($dbh,$num,$prod,$logID);
-    echo "mise";
-  } else {
-    echo "no money";
-  }
-}
-
-function rangemise($dbh){
-  $logID=$_SESSION['logID'];
-  $money=$_SESSION['money'];
-  $prod=$_POST['prod'];
-  $num1=$_POST['num1'];
-  $num2=$_POST['num2'];
-  $num=0;
-  $list=[];
-  for ($i=$num1;$i<=$num2;){
-      array_push($list,$i);
-      $i=$i+0.01;
-      $num=$num+$i;
-  }
-
-  array_push($list,$num2);
-  $i=$i+0.01;
-  $num=$num+$i;
-
-  if ($money>=$num) {
-    foreach ($list as $elem) {
-      takemoney($dbh,$money,$elem,$logID);
-      $money=$money-$elem;
-      bet($dbh,$elem,$prod,$logID);
-    }
-    echo "mise";
-  } else {
-    echo "no money";
-  }
 }
 
 

@@ -187,7 +187,7 @@ function addmoney (evt){
   // console.log(user);
   $.ajax({
     type: 'POST',
-    url: 'Model/db_connect.php',
+    url: 'Model/adminmanager.php',
     data:{'func':"adminaddmoney",'money':5,'user':user},
     success:function(html) {
       console.log("Added "+"$5"+" to "+user+"."+html);
@@ -201,7 +201,7 @@ function takemoney (evt){
   // console.log(user);
   $.ajax({
     type: 'POST',
-    url: 'Model/db_connect.php',
+    url: 'Model/adminmanager.php',
     data:{'func':"admintakemoney",'money':5,'user':user},
     success:function(html) {
       console.log("Taken "+"$5"+" to "+user+"."+html);
@@ -269,7 +269,7 @@ function mise(){
   prod=window.location.href.split('produit=',2)[1];
   $.ajax({
     type: 'POST',
-    url: 'Model/db_connect.php',
+    url: 'Model/mises.php',
     data:{'func':"mise",'num':num,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num+"' to the server for "+prod+html);
@@ -291,7 +291,7 @@ num2=document.getElementById('mr2').value;
 prod=window.location.href.split('produit=',2)[1];
   $.ajax({
     type: 'POST',
-    url: 'Model/db_connect.php',
+    url: 'Model/mises.php',
     data:{'func':"rangemise",'num1':num1,'num2':num2,'prod':prod},
     success:function(html) {
       console.log("Send comment '"+num1+"' and '"+num2+"' to the server for "+prod+html);
